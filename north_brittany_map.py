@@ -6,11 +6,11 @@ import sys
 
 # Bounding box: south, west, north, east
 # Morlaix (west) to Granville (east), northern Brittany coast
-SOUTH, WEST, NORTH, EAST = 47.8, -3.95, 48.9, -1.5
+SOUTH, WEST, NORTH, EAST = 48.4, -3.95, 48.9, -1.5
 
-# Aspect ratio: lon_span * cos(48°) / lat_span ≈ 2.45 * 0.669 / 1.1 ≈ 1.49
+# Aspect ratio: lon_span * cos(48.65°) / lat_span ≈ 2.45 * 0.661 / 0.5 ≈ 3.24
 SVG_W = 1100
-SVG_H = 740
+SVG_H = 340
 
 # Towns to highlight specifically (may be "village" class in OSM)
 NAMED_TOWNS = {"Lézardrieux", "Tréguier", "Saint-Quay-Portrieux"}
