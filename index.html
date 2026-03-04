@@ -34,7 +34,7 @@
                     const rect = svg.getBoundingClientRect();
                     const mx = e.clientX - rect.left;
                     const my = e.clientY - rect.top;
-                    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+                    const factor = e.deltaY < 0 ? 1.05 : 1 / 1.05;
                     tx -= mx * (factor - 1);
                     ty -= my * (factor - 1);
                     scale *= factor;
