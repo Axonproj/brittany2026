@@ -21,10 +21,20 @@
         <p class="above">Placeholder above</p>
     </header>
     <div id="container"></div>
-    <footer>Placeholder below</footer>
+    <footer>
+        <div id="svg-time" style="font-size:0.8em; color:#888; margin-bottom:6px;"></div>
+        Placeholder below
+    </footer>
     <script>
         fetch('sailing_routes.svg')
-            .then(r => r.text())
+            .then(r => {
+                const mod = r.headers.get('Last-Modified');
+                if (mod) {
+                    document.getElementById('svg-time').textContent =
+                        'Map generated: ' + new Date(mod).toLocaleString();
+                }
+                return r.text();
+            })
             .then(svgText => {
                 const container = document.getElementById('container');
                 container.innerHTML = svgText;
