@@ -414,8 +414,8 @@ def main():
     for name, pts in all_routes:
         print(f"  {name!r:40s} {len(pts)} pts  {route_distance_nm(pts):.1f} nm")
 
-    # Fixed bbox: north Brittany coast, Morlaix to Granville
-    south, west, north, east = 47.8, -3.95, 48.9, -1.5
+    # Fixed bbox: north Brittany coast, Morlaix to Granville; south trimmed to Dinan
+    south, west, north, east = 48.4, -3.95, 48.9, -1.5
 
     # Compute SVG height from aspect ratio
     mid_lat = (north + south) / 2
