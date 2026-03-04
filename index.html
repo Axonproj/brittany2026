@@ -5,11 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>North Brittany</title>
     <style>
-        body { margin: 0; background: #222; }
-        img { width: 100%; height: 100vh; object-fit: contain; }
+        body { margin: 0; overflow: hidden; background: #222; }
+        #container { width: 100vw; height: 100vh; cursor: grab; }
+        #container:active { cursor: grabbing; }
+        #container svg { width: 100%; height: 100%; }
     </style>
 </head>
 <body>
-    <img src="north_brittany.svg" alt="North Brittany sailing map">
+    <div id="container"></div>
+    <script>
+        fetch('north_brittany.svg')
+            .then(r => r.text())
+            .then(svgText => {
+                const container = document.getElementById('container');
+                container.innerHTML = svgText;
+                const svg = container.querySelector('svg');
+
+                let scale = 1, tx = 0, ty = 0;
+                let dragging = false, startX, startY;
+
+                function applyTransform() {
+                    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+                    svg.style.transformOrigin = '0 0';
+                }
+
+                container.addEventListener('wheel', e => {
+                    e.preventDefault();
+                    const rect = svg.getBoundingClientRect();
+                    const mx = e.clientX - rect.left;
+                    const my = e.clientY - rect.top;
+                    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+                    tx -= mx * (factor - 1);
+                    ty -= my * (factor - 1);
+                    scale *= factor;
+                    applyTransform();
+                }, { passive: false });
+
+                container.addEventListener('mousedown', e => {
+                    dragging = true;
+                    startX = e.clientX - tx;
+                    startY = e.clientY - ty;
+                });
+                window.addEventListener('mousemove', e => {
+                    if (!dragging) return;
+                    tx = e.clientX - startX;
+                    ty = e.clientY - startY;
+                    applyTransform();
+                });
+                window.addEventListener('mouseup', () => dragging = false);
+            });
+    </script>
 </body>
 </html>
